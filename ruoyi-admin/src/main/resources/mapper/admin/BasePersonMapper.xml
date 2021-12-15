@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.admin.mapper.BasePersonMapper">
+    
+    <resultMap type="BasePerson" id="BasePersonResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="communityCode"    column="community_code"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="roomCode"    column="room_code"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="sex"    column="sex"    />
+        <result property="sexName"    column="sex_name"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="country"    column="country"    />
+        <result property="countryName"    column="country_name"    />
+        <result property="nationality"    column="nationality"    />
+        <result property="nationalityName"    column="nationality_name"    />
+        <result property="paperType"    column="paper_type"    />
+        <result property="paperTypeName"    column="paper_type_name"    />
+        <result property="paperNumber"    column="paper_number"    />
+        <result property="address"    column="address"    />
+        <result property="marriage"    column="marriage"    />
+        <result property="marriageName"    column="marriage_name"    />
+        <result property="political"    column="political"    />
+        <result property="politicalName"    column="political_name"    />
+        <result property="education"    column="education"    />
+        <result property="educationName"    column="education_name"    />
+        <result property="occupation"    column="occupation"    />
+        <result property="image"    column="image"    />
+        <result property="checkinTime"    column="checkin_time"    />
+        <result property="residencePermit"    column="residence_permit"    />
+        <result property="relation"    column="relation"    />
+        <result property="relationName"    column="relation_name"    />
+        <result property="faceGroupDetailId"    column="face_group_detail_id"    />
+        <result property="opDate"    column="op_date"    />
+        <result property="groupType"    column="group_type"    />
+        <result property="livePlace"    column="live_place"    />
+        <result property="addressType"    column="address_type"    />
+        <result property="liveType"    column="live_type"    />
+        <result property="powerType"    column="power_type"    />
+        <result property="powerTypeName"    column="power_type_name"    />
+        <result property="company"    column="company"    />
+        <result property="haveCertificate"    column="have_certificate"    />
+        <result property="packageCode"    column="package_code"    />
+        <result property="linkTags"    column="link_tags"    />
+        <result property="checkoutTime"    column="checkout_time"    />
+    </resultMap>
+
+    <sql id="selectBasePersonVo">
+        select id, code, community_code, community_name, room_code, name, type, type_name, phone, sex, sex_name, birthday, country, country_name, nationality, nationality_name, paper_type, paper_type_name, paper_number, address, marriage, marriage_name, political, political_name, education, education_name, occupation, image, checkin_time, residence_permit, relation, relation_name, face_group_detail_id, op_date, group_type, live_place, address_type, live_type, power_type, power_type_name, company, have_certificate, package_code, link_tags, checkout_time from base_person
+    </sql>
+
+    <sql id="selectBasePersonV">
+        select id, code, community_code, community_name, room_code, name, type, type_name, phone, sex, sex_name, birthday, country, country_name, nationality, nationality_name, paper_type, paper_type_name, paper_number, address, marriage, marriage_name, political, political_name, education, education_name, occupation, image, checkin_time, residence_permit, relation, relation_name, face_group_detail_id, op_date, group_type, live_place, address_type, live_type, power_type, power_type_name, company, have_certificate, package_code, link_tags, checkout_time from base_person
+        where community_code='07999'
+    </sql>
+
+
+
+    <select id="selectBasePersonList" parameterType="BasePerson" resultMap="BasePersonResult">
+        <include refid="selectBasePersonV"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="communityCode != null  and communityCode != ''"> and community_code = #{communityCode}</if>
+            <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
+            <if test="roomCode != null  and roomCode != ''"> and room_code = #{roomCode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="typeName != null  and typeName != ''"> and type_name like concat('%', #{typeName}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="sexName != null  and sexName != ''"> and sex_name like concat('%', #{sexName}, '%')</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="country != null "> and country = #{country}</if>
+            <if test="countryName != null  and countryName != ''"> and country_name like concat('%', #{countryName}, '%')</if>
+            <if test="nationality != null "> and nationality = #{nationality}</if>
+            <if test="nationalityName != null  and nationalityName != ''"> and nationality_name like concat('%', #{nationalityName}, '%')</if>
+            <if test="paperType != null "> and paper_type = #{paperType}</if>
+            <if test="paperTypeName != null  and paperTypeName != ''"> and paper_type_name like concat('%', #{paperTypeName}, '%')</if>
+            <if test="paperNumber != null  and paperNumber != ''"> and paper_number = #{paperNumber}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="marriage != null "> and marriage = #{marriage}</if>
+            <if test="marriageName != null  and marriageName != ''"> and marriage_name like concat('%', #{marriageName}, '%')</if>
+            <if test="political != null "> and political = #{political}</if>
+            <if test="politicalName != null  and politicalName != ''"> and political_name like concat('%', #{politicalName}, '%')</if>
+            <if test="education != null "> and education = #{education}</if>
+            <if test="educationName != null  and educationName != ''"> and education_name like concat('%', #{educationName}, '%')</if>
+            <if test="occupation != null  and occupation != ''"> and occupation = #{occupation}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="checkinTime != null "> and checkin_time = #{checkinTime}</if>
+            <if test="residencePermit != null "> and residence_permit = #{residencePermit}</if>
+            <if test="relation != null "> and relation = #{relation}</if>
+            <if test="relationName != null  and relationName != ''"> and relation_name like concat('%', #{relationName}, '%')</if>
+            <if test="faceGroupDetailId != null  and faceGroupDetailId != ''"> and face_group_detail_id = #{faceGroupDetailId}</if>
+            <if test="opDate != null "> and op_date = #{opDate}</if>
+            <if test="groupType != null  and groupType != ''"> and group_type = #{groupType}</if>
+            <if test="livePlace != null  and livePlace != ''"> and live_place = #{livePlace}</if>
+            <if test="addressType != null "> and address_type = #{addressType}</if>
+            <if test="liveType != null "> and live_type = #{liveType}</if>
+            <if test="powerType != null "> and power_type = #{powerType}</if>
+            <if test="powerTypeName != null  and powerTypeName != ''"> and power_type_name like concat('%', #{powerTypeName}, '%')</if>
+            <if test="company != null  and company != ''"> and company = #{company}</if>
+            <if test="haveCertificate != null "> and have_certificate = #{haveCertificate}</if>
+            <if test="packageCode != null  and packageCode != ''"> and package_code = #{packageCode}</if>
+            <if test="linkTags != null  and linkTags != ''"> and link_tags = #{linkTags}</if>
+            <if test="checkoutTime != null "> and checkout_time = #{checkoutTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasePersonById" parameterType="Long" resultMap="BasePersonResult">
+        <include refid="selectBasePersonVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasePersonByCode" parameterType="String" resultMap="BasePersonResult">
+        <include refid="selectBasePersonVo"/>
+        where community_code = #{communityCode}
+    </select>
+        
+    <insert id="insertBasePerson" parameterType="BasePerson" useGeneratedKeys="true" keyProperty="id">
+        insert into base_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="communityCode != null">community_code,</if>
+            <if test="communityName != null">community_name,</if>
+            <if test="roomCode != null">room_code,</if>
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="typeName != null">type_name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="sex != null">sex,</if>
+            <if test="sexName != null">sex_name,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="country != null">country,</if>
+            <if test="countryName != null">country_name,</if>
+            <if test="nationality != null">nationality,</if>
+            <if test="nationalityName != null">nationality_name,</if>
+            <if test="paperType != null">paper_type,</if>
+            <if test="paperTypeName != null">paper_type_name,</if>
+            <if test="paperNumber != null">paper_number,</if>
+            <if test="address != null">address,</if>
+            <if test="marriage != null">marriage,</if>
+            <if test="marriageName != null">marriage_name,</if>
+            <if test="political != null">political,</if>
+            <if test="politicalName != null">political_name,</if>
+            <if test="education != null">education,</if>
+            <if test="educationName != null">education_name,</if>
+            <if test="occupation != null">occupation,</if>
+            <if test="image != null">image,</if>
+            <if test="checkinTime != null">checkin_time,</if>
+            <if test="residencePermit != null">residence_permit,</if>
+            <if test="relation != null">relation,</if>
+            <if test="relationName != null">relation_name,</if>
+            <if test="faceGroupDetailId != null">face_group_detail_id,</if>
+            <if test="opDate != null">op_date,</if>
+            <if test="groupType != null">group_type,</if>
+            <if test="livePlace != null">live_place,</if>
+            <if test="addressType != null">address_type,</if>
+            <if test="liveType != null">live_type,</if>
+            <if test="powerType != null">power_type,</if>
+            <if test="powerTypeName != null">power_type_name,</if>
+            <if test="company != null">company,</if>
+            <if test="haveCertificate != null">have_certificate,</if>
+            <if test="packageCode != null">package_code,</if>
+            <if test="linkTags != null">link_tags,</if>
+            <if test="checkoutTime != null">checkout_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="communityCode != null">#{communityCode},</if>
+            <if test="communityName != null">#{communityName},</if>
+            <if test="roomCode != null">#{roomCode},</if>
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="typeName != null">#{typeName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="sexName != null">#{sexName},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="country != null">#{country},</if>
+            <if test="countryName != null">#{countryName},</if>
+            <if test="nationality != null">#{nationality},</if>
+            <if test="nationalityName != null">#{nationalityName},</if>
+            <if test="paperType != null">#{paperType},</if>
+            <if test="paperTypeName != null">#{paperTypeName},</if>
+            <if test="paperNumber != null">#{paperNumber},</if>
+            <if test="address != null">#{address},</if>
+            <if test="marriage != null">#{marriage},</if>
+            <if test="marriageName != null">#{marriageName},</if>
+            <if test="political != null">#{political},</if>
+            <if test="politicalName != null">#{politicalName},</if>
+            <if test="education != null">#{education},</if>
+            <if test="educationName != null">#{educationName},</if>
+            <if test="occupation != null">#{occupation},</if>
+            <if test="image != null">#{image},</if>
+            <if test="checkinTime != null">#{checkinTime},</if>
+            <if test="residencePermit != null">#{residencePermit},</if>
+            <if test="relation != null">#{relation},</if>
+            <if test="relationName != null">#{relationName},</if>
+            <if test="faceGroupDetailId != null">#{faceGroupDetailId},</if>
+            <if test="opDate != null">#{opDate},</if>
+            <if test="groupType != null">#{groupType},</if>
+            <if test="livePlace != null">#{livePlace},</if>
+            <if test="addressType != null">#{addressType},</if>
+            <if test="liveType != null">#{liveType},</if>
+            <if test="powerType != null">#{powerType},</if>
+            <if test="powerTypeName != null">#{powerTypeName},</if>
+            <if test="company != null">#{company},</if>
+            <if test="haveCertificate != null">#{haveCertificate},</if>
+            <if test="packageCode != null">#{packageCode},</if>
+            <if test="linkTags != null">#{linkTags},</if>
+            <if test="checkoutTime != null">#{checkoutTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasePerson" parameterType="BasePerson">
+        update base_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="communityCode != null">community_code = #{communityCode},</if>
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="roomCode != null">room_code = #{roomCode},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="typeName != null">type_name = #{typeName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="sexName != null">sex_name = #{sexName},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="country != null">country = #{country},</if>
+            <if test="countryName != null">country_name = #{countryName},</if>
+            <if test="nationality != null">nationality = #{nationality},</if>
+            <if test="nationalityName != null">nationality_name = #{nationalityName},</if>
+            <if test="paperType != null">paper_type = #{paperType},</if>
+            <if test="paperTypeName != null">paper_type_name = #{paperTypeName},</if>
+            <if test="paperNumber != null">paper_number = #{paperNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="marriage != null">marriage = #{marriage},</if>
+            <if test="marriageName != null">marriage_name = #{marriageName},</if>
+            <if test="political != null">political = #{political},</if>
+            <if test="politicalName != null">political_name = #{politicalName},</if>
+            <if test="education != null">education = #{education},</if>
+            <if test="educationName != null">education_name = #{educationName},</if>
+            <if test="occupation != null">occupation = #{occupation},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="checkinTime != null">checkin_time = #{checkinTime},</if>
+            <if test="residencePermit != null">residence_permit = #{residencePermit},</if>
+            <if test="relation != null">relation = #{relation},</if>
+            <if test="relationName != null">relation_name = #{relationName},</if>
+            <if test="faceGroupDetailId != null">face_group_detail_id = #{faceGroupDetailId},</if>
+            <if test="opDate != null">op_date = #{opDate},</if>
+            <if test="groupType != null">group_type = #{groupType},</if>
+            <if test="livePlace != null">live_place = #{livePlace},</if>
+            <if test="addressType != null">address_type = #{addressType},</if>
+            <if test="liveType != null">live_type = #{liveType},</if>
+            <if test="powerType != null">power_type = #{powerType},</if>
+            <if test="powerTypeName != null">power_type_name = #{powerTypeName},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="haveCertificate != null">have_certificate = #{haveCertificate},</if>
+            <if test="packageCode != null">package_code = #{packageCode},</if>
+            <if test="linkTags != null">link_tags = #{linkTags},</if>
+            <if test="checkoutTime != null">checkout_time = #{checkoutTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasePersonById" parameterType="Long">
+        delete from base_person where id = #{id}
+    </delete>
+
+    <delete id="deleteBasePersonByIds" parameterType="String">
+        delete from base_person where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

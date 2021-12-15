@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.admin.mapper.BaseCompanyMapper">
+    
+    <resultMap type="BaseCompany" id="BaseCompanyResult">
+        <result property="id"    column="id"    />
+        <result property="communityCode"    column="community_code"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="companyCode"    column="company_code"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="companyType"    column="company_type"    />
+        <result property="companyTypeName"    column="company_type_name"    />
+        <result property="companyLicense"    column="company_license"    />
+        <result property="companyLicenseNum"    column="company_license_num"    />
+        <result property="companyAttention"    column="company_attention"    />
+        <result property="companyScope"    column="company_scope"    />
+        <result property="companyScopeName"    column="company_scope_name"    />
+        <result property="companyAddress"    column="company_address"    />
+        <result property="companyLocation"    column="company_location"    />
+        <result property="companyLocationArea"    column="company_location_area"    />
+        <result property="companyImage"    column="company_image"    />
+        <result property="roomCode"    column="room_code"    />
+        <result property="ownerCode"    column="owner_code"    />
+        <result property="ownerName"    column="owner_name"    />
+        <result property="ownerPaperNum"    column="owner_paper_num"    />
+        <result property="ownerPhone"    column="owner_phone"    />
+        <result property="ownerImage"    column="owner_image"    />
+        <result property="roomType"    column="room_type"    />
+        <result property="roomTypeName"    column="room_type_name"    />
+        <result property="legalCode"    column="legal_code"    />
+        <result property="legalName"    column="legal_name"    />
+        <result property="legalPaperNum"    column="legal_paper_num"    />
+        <result property="legalPhone"    column="legal_phone"    />
+        <result property="legalImage"    column="legal_image"    />
+        <result property="companyStatus"    column="company_status"    />
+        <result property="companyStatusName"    column="company_status_name"    />
+        <result property="groupType"    column="group_type"    />
+        <result property="groupTypeName"    column="group_type_name"    />
+        <result property="licenseTime"    column="license_time"    />
+        <result property="produce"    column="produce"    />
+        <result property="licenseAddress"    column="license_address"    />
+        <result property="contactEmail"    column="contact_email"    />
+    </resultMap>
+
+    <sql id="selectBaseCompanyVo">
+        select id, community_code, community_name, company_code, company_name, company_type, company_type_name, company_license, company_license_num, company_attention, company_scope, company_scope_name, company_address, company_location, company_location_area, company_image, room_code, owner_code, owner_name, owner_paper_num, owner_phone, owner_image, room_type, room_type_name, legal_code, legal_name, legal_paper_num, legal_phone, legal_image, company_status, company_status_name, group_type, group_type_name, license_time, produce, license_address, contact_email from base_company
+    </sql>
+
+    <select id="selectBaseCompanyList" parameterType="BaseCompany" resultMap="BaseCompanyResult">
+        <include refid="selectBaseCompanyVo"/>
+        <where>  
+            <if test="communityCode != null  and communityCode != ''"> and community_code = #{communityCode}</if>
+            <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
+            <if test="companyCode != null  and companyCode != ''"> and company_code = #{companyCode}</if>
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="companyType != null "> and company_type = #{companyType}</if>
+            <if test="companyTypeName != null  and companyTypeName != ''"> and company_type_name like concat('%', #{companyTypeName}, '%')</if>
+            <if test="companyLicense != null "> and company_license = #{companyLicense}</if>
+            <if test="companyLicenseNum != null  and companyLicenseNum != ''"> and company_license_num = #{companyLicenseNum}</if>
+            <if test="companyAttention != null "> and company_attention = #{companyAttention}</if>
+            <if test="companyScope != null  and companyScope != ''"> and company_scope = #{companyScope}</if>
+            <if test="companyScopeName != null  and companyScopeName != ''"> and company_scope_name like concat('%', #{companyScopeName}, '%')</if>
+            <if test="companyAddress != null  and companyAddress != ''"> and company_address = #{companyAddress}</if>
+            <if test="companyLocation != null  and companyLocation != ''"> and company_location = #{companyLocation}</if>
+            <if test="companyLocationArea != null  and companyLocationArea != ''"> and company_location_area = #{companyLocationArea}</if>
+            <if test="companyImage != null  and companyImage != ''"> and company_image = #{companyImage}</if>
+            <if test="roomCode != null  and roomCode != ''"> and room_code = #{roomCode}</if>
+            <if test="ownerCode != null  and ownerCode != ''"> and owner_code = #{ownerCode}</if>
+            <if test="ownerName != null  and ownerName != ''"> and owner_name like concat('%', #{ownerName}, '%')</if>
+            <if test="ownerPaperNum != null  and ownerPaperNum != ''"> and owner_paper_num = #{ownerPaperNum}</if>
+            <if test="ownerPhone != null  and ownerPhone != ''"> and owner_phone = #{ownerPhone}</if>
+            <if test="ownerImage != null  and ownerImage != ''"> and owner_image = #{ownerImage}</if>
+            <if test="roomType != null "> and room_type = #{roomType}</if>
+            <if test="roomTypeName != null  and roomTypeName != ''"> and room_type_name like concat('%', #{roomTypeName}, '%')</if>
+            <if test="legalCode != null  and legalCode != ''"> and legal_code = #{legalCode}</if>
+            <if test="legalName != null  and legalName != ''"> and legal_name like concat('%', #{legalName}, '%')</if>
+            <if test="legalPaperNum != null  and legalPaperNum != ''"> and legal_paper_num = #{legalPaperNum}</if>
+            <if test="legalPhone != null  and legalPhone != ''"> and legal_phone = #{legalPhone}</if>
+            <if test="legalImage != null  and legalImage != ''"> and legal_image = #{legalImage}</if>
+            <if test="companyStatus != null "> and company_status = #{companyStatus}</if>
+            <if test="companyStatusName != null  and companyStatusName != ''"> and company_status_name like concat('%', #{companyStatusName}, '%')</if>
+            <if test="groupType != null "> and group_type = #{groupType}</if>
+            <if test="groupTypeName != null  and groupTypeName != ''"> and group_type_name like concat('%', #{groupTypeName}, '%')</if>
+            <if test="licenseTime != null  and licenseTime != ''"> and license_time = #{licenseTime}</if>
+            <if test="produce != null  and produce != ''"> and produce = #{produce}</if>
+            <if test="licenseAddress != null  and licenseAddress != ''"> and license_address = #{licenseAddress}</if>
+            <if test="contactEmail != null  and contactEmail != ''"> and contact_email = #{contactEmail}</if>
+        </where>
+    </select>
+
+    <select id="selectBaseCompanyById" parameterType="Long" resultMap="BaseCompanyResult">
+        <include refid="selectBaseCompanyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBaseCompanyByCommunityCode" parameterType="String" resultMap="BaseCompanyResult">
+        <include refid="selectBaseCompanyVo"/>
+        where community_code = #{communityCode}
+    </select>
+
+    <select id="selectBaseCompanyByName" parameterType="String" resultMap="BaseCompanyResult">
+        <include refid="selectBaseCompanyVo"/>
+        where company_name = #{companyName}
+    </select>
+        
+    <insert id="insertBaseCompany" parameterType="BaseCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into base_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityCode != null">community_code,</if>
+            <if test="communityName != null">community_name,</if>
+            <if test="companyCode != null">company_code,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="companyType != null">company_type,</if>
+            <if test="companyTypeName != null">company_type_name,</if>
+            <if test="companyLicense != null">company_license,</if>
+            <if test="companyLicenseNum != null">company_license_num,</if>
+            <if test="companyAttention != null">company_attention,</if>
+            <if test="companyScope != null">company_scope,</if>
+            <if test="companyScopeName != null">company_scope_name,</if>
+            <if test="companyAddress != null">company_address,</if>
+            <if test="companyLocation != null">company_location,</if>
+            <if test="companyLocationArea != null">company_location_area,</if>
+            <if test="companyImage != null">company_image,</if>
+            <if test="roomCode != null">room_code,</if>
+            <if test="ownerCode != null">owner_code,</if>
+            <if test="ownerName != null">owner_name,</if>
+            <if test="ownerPaperNum != null">owner_paper_num,</if>
+            <if test="ownerPhone != null">owner_phone,</if>
+            <if test="ownerImage != null">owner_image,</if>
+            <if test="roomType != null">room_type,</if>
+            <if test="roomTypeName != null">room_type_name,</if>
+            <if test="legalCode != null">legal_code,</if>
+            <if test="legalName != null">legal_name,</if>
+            <if test="legalPaperNum != null">legal_paper_num,</if>
+            <if test="legalPhone != null">legal_phone,</if>
+            <if test="legalImage != null">legal_image,</if>
+            <if test="companyStatus != null">company_status,</if>
+            <if test="companyStatusName != null">company_status_name,</if>
+            <if test="groupType != null">group_type,</if>
+            <if test="groupTypeName != null">group_type_name,</if>
+            <if test="licenseTime != null">license_time,</if>
+            <if test="produce != null">produce,</if>
+            <if test="licenseAddress != null">license_address,</if>
+            <if test="contactEmail != null">contact_email,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="communityCode != null">#{communityCode},</if>
+            <if test="communityName != null">#{communityName},</if>
+            <if test="companyCode != null">#{companyCode},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="companyType != null">#{companyType},</if>
+            <if test="companyTypeName != null">#{companyTypeName},</if>
+            <if test="companyLicense != null">#{companyLicense},</if>
+            <if test="companyLicenseNum != null">#{companyLicenseNum},</if>
+            <if test="companyAttention != null">#{companyAttention},</if>
+            <if test="companyScope != null">#{companyScope},</if>
+            <if test="companyScopeName != null">#{companyScopeName},</if>
+            <if test="companyAddress != null">#{companyAddress},</if>
+            <if test="companyLocation != null">#{companyLocation},</if>
+            <if test="companyLocationArea != null">#{companyLocationArea},</if>
+            <if test="companyImage != null">#{companyImage},</if>
+            <if test="roomCode != null">#{roomCode},</if>
+            <if test="ownerCode != null">#{ownerCode},</if>
+            <if test="ownerName != null">#{ownerName},</if>
+            <if test="ownerPaperNum != null">#{ownerPaperNum},</if>
+            <if test="ownerPhone != null">#{ownerPhone},</if>
+            <if test="ownerImage != null">#{ownerImage},</if>
+            <if test="roomType != null">#{roomType},</if>
+            <if test="roomTypeName != null">#{roomTypeName},</if>
+            <if test="legalCode != null">#{legalCode},</if>
+            <if test="legalName != null">#{legalName},</if>
+            <if test="legalPaperNum != null">#{legalPaperNum},</if>
+            <if test="legalPhone != null">#{legalPhone},</if>
+            <if test="legalImage != null">#{legalImage},</if>
+            <if test="companyStatus != null">#{companyStatus},</if>
+            <if test="companyStatusName != null">#{companyStatusName},</if>
+            <if test="groupType != null">#{groupType},</if>
+            <if test="groupTypeName != null">#{groupTypeName},</if>
+            <if test="licenseTime != null">#{licenseTime},</if>
+            <if test="produce != null">#{produce},</if>
+            <if test="licenseAddress != null">#{licenseAddress},</if>
+            <if test="contactEmail != null">#{contactEmail},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBaseCompany" parameterType="BaseCompany">
+        update base_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="communityCode != null">community_code = #{communityCode},</if>
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="companyCode != null">company_code = #{companyCode},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="companyType != null">company_type = #{companyType},</if>
+            <if test="companyTypeName != null">company_type_name = #{companyTypeName},</if>
+            <if test="companyLicense != null">company_license = #{companyLicense},</if>
+            <if test="companyLicenseNum != null">company_license_num = #{companyLicenseNum},</if>
+            <if test="companyAttention != null">company_attention = #{companyAttention},</if>
+            <if test="companyScope != null">company_scope = #{companyScope},</if>
+            <if test="companyScopeName != null">company_scope_name = #{companyScopeName},</if>
+            <if test="companyAddress != null">company_address = #{companyAddress},</if>
+            <if test="companyLocation != null">company_location = #{companyLocation},</if>
+            <if test="companyLocationArea != null">company_location_area = #{companyLocationArea},</if>
+            <if test="companyImage != null">company_image = #{companyImage},</if>
+            <if test="roomCode != null">room_code = #{roomCode},</if>
+            <if test="ownerCode != null">owner_code = #{ownerCode},</if>
+            <if test="ownerName != null">owner_name = #{ownerName},</if>
+            <if test="ownerPaperNum != null">owner_paper_num = #{ownerPaperNum},</if>
+            <if test="ownerPhone != null">owner_phone = #{ownerPhone},</if>
+            <if test="ownerImage != null">owner_image = #{ownerImage},</if>
+            <if test="roomType != null">room_type = #{roomType},</if>
+            <if test="roomTypeName != null">room_type_name = #{roomTypeName},</if>
+            <if test="legalCode != null">legal_code = #{legalCode},</if>
+            <if test="legalName != null">legal_name = #{legalName},</if>
+            <if test="legalPaperNum != null">legal_paper_num = #{legalPaperNum},</if>
+            <if test="legalPhone != null">legal_phone = #{legalPhone},</if>
+            <if test="legalImage != null">legal_image = #{legalImage},</if>
+            <if test="companyStatus != null">company_status = #{companyStatus},</if>
+            <if test="companyStatusName != null">company_status_name = #{companyStatusName},</if>
+            <if test="groupType != null">group_type = #{groupType},</if>
+            <if test="groupTypeName != null">group_type_name = #{groupTypeName},</if>
+            <if test="licenseTime != null">license_time = #{licenseTime},</if>
+            <if test="produce != null">produce = #{produce},</if>
+            <if test="licenseAddress != null">license_address = #{licenseAddress},</if>
+            <if test="contactEmail != null">contact_email = #{contactEmail},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBaseCompanyById" parameterType="Long">
+        delete from base_company where id = #{id}
+    </delete>
+
+    <delete id="deleteBaseCompanyByIds" parameterType="String">
+        delete from base_company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
