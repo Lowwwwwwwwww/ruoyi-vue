@@ -77,14 +77,14 @@
           v-hasPermi="['admin:company:export']"
         >导出</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="info"
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
         >导入</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -179,7 +179,8 @@
           <el-input v-model="form.companyLocationArea" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="单位门面图">
-          <imageUpload v-model="form.companyImage"/>
+          <imageUpload v-model="form.companyImage" value=""/>
+          <!-- <img :src="'http://172.16.1.155/'+form.companyImage" width="300" height="150"/> -->
         </el-form-item>
         <el-form-item label="单位状态名称" prop="companyStatusName">
           <el-select v-model="form.companyStatusName" placeholder="">
@@ -249,7 +250,7 @@
 </template>
 
 <script>
-import { listCompany, getCompany, delCompany, addCompany, updateCompany } from "@/api/admin/company";
+import { listCompany, getCompany, delCompany, addCompany, updateCompany, importData } from "@/api/admin/company";
 // 导入模板接口importTemplate
 import { importTemplate } from "@/api/admin/company";
 import { getToken } from "@/utils/auth";
@@ -278,6 +279,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示选择人员弹出层
+      openP: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -319,6 +322,21 @@ export default {
         licenseAddress: null,
         contactEmail: null
       },
+        // 用户导入参数
+      upload: {
+        // 是否显示弹出层（用户导入）
+        open: false,
+        // 弹出层标题（用户导入）
+        title: "",
+        // 是否禁用上传
+        isUploading: false,
+        // 是否更新已经存在的用户数据
+        updateSupport: 0,
+        // 设置上传的请求头部
+        headers: { Authorization: "Bearer " + getToken() },
+        // 上传的地址
+        url: process.env.VUE_APP_BASE_API + "/admin/company/importData"
+      },
       // 表单参数
       form: {},
       // 表单校验
@@ -328,21 +346,6 @@ export default {
   },
   created() {
     this.getList();
-  },
-  // 用户导入参数
-  upload: {
-    // 是否显示弹出层（用户导入）
-    open: false,
-    // 弹出层标题（用户导入）
-    title: "",
-    // 是否禁用上传
-    isUploading: false,
-    // 是否更新已经存在的用户数据
-    updateSupport: 0,
-    // 设置上传的请求头部
-    headers: { Authorization: "Bearer " + getToken() },
-    // 上传的地址
-    url: process.env.VUE_APP_BASE_API + "/admin/company/importData"
   },
   methods: {
     /** 查询base_company 实有单位列表 */
@@ -458,6 +461,8 @@ export default {
       this.reset();
       const id = row.id || this.ids
       getCompany(id).then(response => {
+        response.data.companyImage='http://172.16.1.155/'+response.data.companyImage;
+        console.log(response.data.companyImage);
         this.form = response.data;
         this.open = true;
         this.title = "修改实有单位";

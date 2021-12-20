@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="selectBaseCarList" parameterType="BaseCar" resultMap="BaseCarResult">
-        <include refid="selectBaseCarV"/>
+        <include refid="selectBaseCarVo"/>
         <where>  
             <if test="num != null  and num != ''"> and num = #{num}</if>
             <if test="numColor != null "> and num_color = #{numColor}</if>
@@ -63,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="carSign != null  and carSign != ''"> and car_sign = #{carSign}</if>
             <if test="groupTypeName != null  and groupTypeName != ''"> and group_type_name like concat('%', #{groupTypeName}, '%')</if>
             <if test="packageCode != null  and packageCode != ''"> and package_code = #{packageCode}</if>
+            and community_code='07999'
         </where>
     </select>
     

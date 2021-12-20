@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.ImageToFdfsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.config.ServerConfig;
 
+import java.util.Base64;
+
 /**
  * 通用请求处理
  * 
@@ -30,6 +34,9 @@ public class CommonController
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @Autowired
+    private ImageToFdfsServiceImpl imageToFdfsService;
 
     /**
      * 通用下载请求
@@ -73,6 +80,11 @@ public class CommonController
         {
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
+            //图片上传fastfds
+            byte[] fileByte = null;
+            fileByte = file.getBytes();
+            String voiceBase64 = Base64.getEncoder().encodeToString(fileByte);
+            imageToFdfsService.saveImageToFdfs(voiceBase64);
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             String url = serverConfig.getUrl() + fileName;

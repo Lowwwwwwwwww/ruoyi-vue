@@ -122,16 +122,6 @@
           <span>{{ parseTime(scope.row.opTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="车辆所属单位编码" align="center" prop="companyCode" /> -->
-      <!-- <el-table-column label="车辆属性(1私家车 2公车)" align="center" prop="properties">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.car_properties" :value="scope.row.properties"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="车辆运输货物 内容和质量" align="center" prop="carTransport" />
-      <el-table-column label="车辆标识 0正常物品 1危化物品" align="center" prop="carSign" />
-      <el-table-column label="${comment}" align="center" prop="groupTypeName" />
-      <el-table-column label="库的code" align="center" prop="packageCode" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -192,7 +182,7 @@
           <imageUpload v-model="form.image"/>
         </el-form-item>
         <el-form-item label="人员code" prop="personCode">
-          <el-input v-model="form.personCode" @focus="openPerson()" placeholder="请输入人员code" />
+          <el-input v-model="form.personCode" @click.native="openPerson" placeholder="请选择人员code" />
         </el-form-item>
 
         <el-form-item label="车辆所属单位" prop="companyCode">
@@ -232,6 +222,52 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <!-- 选择人员弹窗 -->
+    <el-dialog :title="title" :visible.sync="openP" width="1000px" append-to-body>
+      <el-form :model="queryParamsPerson" ref="queryFormPerson" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="姓名" prop="name">
+          <el-input
+            v-model="queryParamsPerson.name"
+            placeholder="请输入姓名"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="证件号码" prop="paperNumber">
+          <el-input
+            v-model="queryParamsPerson.paperNumber"
+            placeholder="请输入证件号码"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryPerson">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQueryPerson">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-table v-loading="loadingPerson" :data="personList" @selection-change="handleSelectionChangePerson">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="人员代码" align="center" prop="code" />
+        <el-table-column label="姓名" align="center" prop="name" />
+        <el-table-column label="证件号码" align="center" prop="paperNumber" />
+      </el-table>
+      <pagination
+      v-show="total>0"
+      :total="totalPerson"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getPerson"
+      />
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormOpenP">确 定</el-button>
+        <el-button @click="cancelOpenP">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -246,6 +282,8 @@ export default {
       companyList:[],
       // 遮罩层
       loading: true,
+      // 选择人员遮罩层
+      loadingPerson: true,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -256,12 +294,26 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      // 选择人员总条数
+      totalPerson: 0,
       // 车辆信息表格数据
       carList: [],
+      //选择人员信息表格
+      personList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示选择人员弹出层
+      openP: false,
+      // 选择人员查询参数
+      queryParamsPerson: {
+        pageNum: 1,
+        pageSize: 10,
+        code: null,
+        name: null,
+        paperNumber: null,
+      },
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -298,6 +350,7 @@ export default {
   created() {
     this.getList();
     this.getCompany();
+    this.getPerson();
   },
   methods: {
     /** 查询车辆信息列表 */
@@ -311,18 +364,40 @@ export default {
     },
     /** 查询人员信息列表 */
     getPerson() {
-      this.loading = true;
-      listPerson(this.queryParams).then(response => {
-        this.personList = response.data;
+      this.loadingPerson = true;
+      listPerson(this.queryParamsPerson).then(response => {
+        this.personList = response.rows;
+        this.totalPerson = response.total;
+        this.loadingPerson = false;
       });
     },
+    // 选择人员弹窗
     openPerson() {
-      // this.dialogFormVisible = true
-      // setTimeout(() => {
-      //   //这里是请求后端的方法，生成表格数据
-      //   this.getPerson()
-      //   }, 50)
+      this.openP = true;
+      this.title = "选择人员";
       },
+      /** 选择人员提交按钮 */
+    submitFormOpenP() {
+      this.form.personCode=this.ids;
+      this.openP = false;
+      // this.$refs["table"].validate(valid => {
+      //   console.log(this.table.row)
+      // });
+    },
+    // 选择人员取消按钮
+    cancelOpenP() {
+      this.openP = false;
+    },
+    /** 选择人员搜索按钮操作 */
+    handleQueryPerson() {
+      this.queryParamsPerson.pageNum = 1;
+      this.getPerson();
+    },
+    /** 选择人员重置按钮操作 */
+    resetQueryPerson() {
+      this.resetForm("queryParamsPerson");
+      this.handleQueryPerson();
+    },
     /** 查询单位信息列表 */
     getCompany() {
       this.loading = true;
@@ -379,6 +454,12 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    // 选择人员多选框选中数据
+    handleSelectionChangePerson(selection) {
+      this.ids = selection.map(item => item.code)
+      this.single = selection.length!==1
+      this.multiple = !selection.length
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
@@ -391,6 +472,8 @@ export default {
       const id = row.id || this.ids
       getCar(id).then(response => {
         this.form = response.data;
+        this.form.image='http://172.16.1.155/'+this.form.image;
+        console.log(this.form.image='http://172.16.1.155/'+this.form.image);
         this.open = true;
         this.title = "修改车辆信息";
       });

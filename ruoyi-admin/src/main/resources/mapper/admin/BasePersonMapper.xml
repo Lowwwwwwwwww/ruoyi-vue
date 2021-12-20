@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="selectBasePersonList" parameterType="BasePerson" resultMap="BasePersonResult">
-        <include refid="selectBasePersonV"/>
+        <include refid="selectBasePersonVo"/>
         <where>  
             <if test="code != null  and code != ''"> and code = #{code}</if>
             <if test="communityCode != null  and communityCode != ''"> and community_code = #{communityCode}</if>
@@ -110,6 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="packageCode != null  and packageCode != ''"> and package_code = #{packageCode}</if>
             <if test="linkTags != null  and linkTags != ''"> and link_tags = #{linkTags}</if>
             <if test="checkoutTime != null "> and checkout_time = #{checkoutTime}</if>
+            and community_code='07999'
         </where>
     </select>
     

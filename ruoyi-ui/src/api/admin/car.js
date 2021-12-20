@@ -12,7 +12,7 @@ export function listCar(query) {
 // 查询人员信息列表
 export function listPerson(query) {
   return request({
-    url: '/admin/car/person',
+    url: '/admin/person/list',
     method: 'get',
     params: query
   })

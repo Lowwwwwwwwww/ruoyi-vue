@@ -42,6 +42,9 @@ public class BaseCarController extends BaseController
     @Autowired
     private IBaseCompanyService baseCompanyService;
 
+    @Autowired
+    private IBasePersonService basePersonService;
+
     /**
      * 查询车辆信息列表
      */
@@ -54,15 +57,6 @@ public class BaseCarController extends BaseController
         return getDataTable(list);
     }
 
-    /**
-     * 获取人员信息详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('admin:car:person')")
-    @GetMapping(value = "/person")
-    public AjaxResult getBasePerson()
-    {
-        return AjaxResult.success(basePerson.selectBasePersonByCode("07999"));
-    }
 
     /**
      * 获取单位信息详细信息

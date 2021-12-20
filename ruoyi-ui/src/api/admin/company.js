@@ -26,6 +26,15 @@ export function addCompany(data) {
   })
 }
 
+// 新增base_company 实有单位
+export function importData(data) {
+  return request({
+    url: '/admin/company/importData',
+    method: 'post',
+    data: data
+  })
+}
+
 // 修改base_company 实有单位
 export function updateCompany(data) {
   return request({
